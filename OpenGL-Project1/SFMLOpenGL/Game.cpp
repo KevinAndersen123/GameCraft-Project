@@ -48,7 +48,7 @@ mat4 mvp, projection;	// Model View Projection
 Game::Game() :
 	m_window(VideoMode(800, 600),
 		"Introduction to OpenGL Texturing")
-{
+{	
 }
 
 Game::Game(sf::ContextSettings settings) :
@@ -164,6 +164,19 @@ Game::Game(sf::ContextSettings settings) :
 		m_pyramidObject[i] = new PyramidObject();
 		m_pyramidObject[i]->setPosition(vec3(0.0f, 2.0f, i * -2.0f + offSet - 16.0f));
 	}
+	if (!m_bgMusic.openFromFile("backgroundMusic.wav"))
+	{
+		std::cout << "Error, cannot load audio" << std::endl;
+	}
+	if (!buffHurt.loadFromFile("oof.wav"))
+	{
+		std::cout << "Error, cannot load audio" << std::endl;
+	}
+	hurtNoise.setBuffer(buffHurt);
+	hurtNoise.setPlayingOffset(sf::seconds(0.4f));
+	m_bgMusic.play();
+	m_bgMusic.setVolume(40.0f);
+	m_bgMusic.setLoop(true);
 }
 
 Game::~Game()
@@ -411,6 +424,8 @@ void Game::update(sf::Time t_deltaTime)
 		//Has the player collided with a pyramid.
 		if (m_pyramidObject[i]->m_collisionBox.getGlobalBounds().intersects(m_playerObject->m_collisionBox.getGlobalBounds()))
 		{
+			hurtNoise.setPlayingOffset(sf::seconds(0.4f));
+			hurtNoise.play();
 			resetGameLose();
 			break;
 		}
@@ -424,14 +439,14 @@ void Game::render()
 	// Save current OpenGL render states
 	m_window.pushGLStates();
 
-	//Hud does not work so it is disabled.
-	string hud = "Score [" + string(toString(m_score)) + "]";
+	////Hud does not work so it is disabled.
+	//string hud = "Score [" + string(toString(m_score)) + "]";
 
-	Text text(hud, m_font);
-	text.setFillColor(sf::Color(255, 255, 255, 170));
-	text.setCharacterSize(30.0f);
-	text.setPosition(50.f, 50.f);
-	//m_window.draw(text);
+	//Text text(hud, m_font);
+	//text.setFillColor(sf::Color(255, 255, 255, 170));
+	//text.setCharacterSize(30.0f);
+	//text.setPosition(50.f, 50.f);
+	////m_window.draw(text);
 
 	// Restore OpenGL render states		
 	m_window.popGLStates();
