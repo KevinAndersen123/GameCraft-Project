@@ -27,9 +27,9 @@
 	(-1.0f, -1.0f, 1.0f)         (1.0f, -1.0f, 1.0f)
 */
 
-const int VERTICES	= 24;	// Total Number of Vertices
-const int INDICES	= 12;	// Total Number of Indexes
-const int UVS		= 48;	// Total Number of UVs
+const int CUBE_VERTICES	= 24;	// Total Number of Vertices
+const int CUBE_INDICES	= 12;	// Total Number of Indexes
+const int CUBE_UVS		= 48;	// Total Number of UVs
 const int COLORS	= 24;	// Total Number of Colors
 
 static const GLfloat vertices[] =
@@ -111,12 +111,38 @@ static const GLfloat colors[] = {
 };
 
 static GLfloat uvs[2 * 4 * 6] = {
-	// Front Face (other faces populated in initialisation)
+	// Front Face
+	0.0, 0.25,
+	0.25, 0.25,
+	0.25, 0.5,
+	0.0, 0.5,
+
 	0.0, 0.0,
-	1.0, 0.0,
-	1.0, 1.0,
-	0.0, 1.0
+	0.25, 0.0,
+	0.25, 0.25,
+	0.0, 0.25,
+
+	0.5, 0.25,
+	0.75, 0.25,
+	0.75, 0.5,
+	0.5, 0.5,
+
+	0.0, 0.5,
+	0.25, 0.5,
+	0.25, 0.75,
+	0.0, 0.75,
+
+	0.75, 0.25,
+	1.0, 0.25,
+	1.0, 0.5,
+	0.75, 0.5,
+
+	0.25, 0.25,
+	0.5, 0.25,
+	0.5, 0.5,
+	0.25, 0.5,
 };
+
 
 static const GLuint indices[] =
 {
