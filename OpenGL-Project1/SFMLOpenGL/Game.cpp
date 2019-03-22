@@ -33,6 +33,7 @@ const string filename = ".//Assets//Textures//MyCube.tga";
 const string filename2 = ".//Assets//Textures//PlayerCube.tga";
 const string filename3 = ".//Assets//Textures//Pyramid.tga";
 const string filename4 = ".//Assets//Textures//ObjectCube.tga";
+const string filename5 = ".//Assets//Textures//particleCube.tga";
 
 int width;						// Width of texture
 int height;						// Height of texture
@@ -42,6 +43,7 @@ unsigned char* img_data;		// image data
 unsigned char* img_data2;		// image data
 unsigned char* img_data3;		// image data
 unsigned char* img_data4;		// image data
+unsigned char* img_data5;		//image data
 
 mat4 mvp, projection;	// Model View Projection
 
@@ -57,6 +59,8 @@ Game::Game(sf::ContextSettings settings) :
 		sf::Style::Default,
 		settings)
 {
+	offset = vec3(-0.5, 0.5, 1);
+	m_timer = 0;
 	//Set the position of the gameObjects
 	for (int i = 0; i < NUM_OF_GAME_OBJECTS - 20; i++)
 	{
@@ -149,6 +153,11 @@ Game::Game(sf::ContextSettings settings) :
 	//Set the position of the player
 	m_playerObject = new PlayerObject();
 	m_playerObject->setPosition(vec3(0.0f, 2.0f, 0.0f));
+
+	for (int i = 0; i < NUM_OF_PARTICLES; i++)
+	{
+		m_particleObject[i] = new Particle(m_playerObject->getPosition() - offset);
+	}
 
 	//Set The position of pyramids.
 
@@ -324,6 +333,7 @@ void Game::initialize()
 	img_data2 = stbi_load(filename2.c_str(), &width, &height, &comp_count, 4);
 	img_data3 = stbi_load(filename3.c_str(), &width, &height, &comp_count, 4);
 	img_data4 = stbi_load(filename4.c_str(), &width, &height, &comp_count, 4);
+	img_data5 = stbi_load(filename5.c_str(), &width, &height, &comp_count, 4);
 
 	if (img_data == NULL)
 	{
@@ -376,6 +386,19 @@ void Game::initialize()
 
 void Game::update(sf::Time t_deltaTime)
 {
+	m_timer++;
+	for (int i = 0; i < NUM_OF_PARTICLES; i++)
+	{
+		if (m_timer <= 5)
+		{
+			m_particleObject[i]->setPosition(m_particleObject[i]->getPosition() + offset);
+		}
+		m_particleObject[i]->update(t_deltaTime);
+		if (m_timer >= 5)
+		{
+			m_particleObject[i]->setPosition(m_playerObject->getPosition() + offset);
+		}
+	}
 	m_playerObject->update(t_deltaTime);
 	m_camera.update(m_playerObject->getPosition());
 
@@ -501,9 +524,15 @@ void Game::render()
 		glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 		glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
 	}
+	for (int i = 0; i < NUM_OF_PARTICLES; i++)
+	{
+		mvp = projection * m_camera.getWorldToViewMatrix() * m_particleObject[i]->getModelToWorldMatrix();
+		glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
+		glDrawElements(GL_TRIANGLES, 3 * CUBE_VERTICES, GL_UNSIGNED_INT, NULL);
+	}
 
 	bindGoalTexture();
-
+	bindParticleTexture();
 	bindPlayerTexture();
 
 	//Draw playerObject cubes.
@@ -606,5 +635,20 @@ void Game::bindGoalTexture()
 		GL_RGBA,		//Bitmap
 		GL_UNSIGNED_BYTE,
 		img_data);
+}
+
+void Game::bindParticleTexture()
+{
+	// Bind to OpenGL
+	glTexImage2D(
+		GL_TEXTURE_2D,	//2D Texture Image
+		0,				//Mipmapping Level 
+		GL_RGBA,		//GL_RED, GL_GREEN, GL_BLUE, GL_ALPHA, GL_RGB, GL_BGR, GL_RGBA 
+		width,			//Width
+		height,			//Height
+		0,				//Border
+		GL_RGBA,		//Bitmap
+		GL_UNSIGNED_BYTE,
+		img_data5);
 }
 

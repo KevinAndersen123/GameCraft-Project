@@ -2,6 +2,7 @@
 
 int main(void)
 {
+	srand(NULL(time));
 	// Setup SFML Context Settings
 	// https://www.sfml-dev.org/documentation/2.0/ContextSettings_8hpp_source.php
 	ContextSettings settings;

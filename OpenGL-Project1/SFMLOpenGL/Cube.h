@@ -30,7 +30,7 @@
 const int CUBE_VERTICES	= 24;	// Total Number of Vertices
 const int CUBE_INDICES	= 12;	// Total Number of Indexes
 const int CUBE_UVS		= 48;	// Total Number of UVs
-const int COLORS	= 24;	// Total Number of Colors
+const int COLORS		= 24;	// Total Number of Colors
 
 static const GLfloat vertices[] =
 {
