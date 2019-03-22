@@ -13,6 +13,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
+#include <SFML/Audio.hpp>
 #include <Debug.h>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -59,6 +60,10 @@ private:
 	//Camera through which we see the world
 	Camera m_camera;
 
+	sf::SoundBuffer buffHurt;
+	sf::Sound hurtNoise;
+
+	sf::Music m_bgMusic;
 	// Game font
 	Font m_font;
 
