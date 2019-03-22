@@ -22,6 +22,7 @@
 #include <PlayerObject.h>
 #include <Camera.h>
 #include <PyramidObject.h>
+#include <GoalObject.h>
 
 using namespace std;
 using namespace sf;
@@ -49,6 +50,8 @@ private:
 
 	//Array of pyramidObject pyramids.
 	PyramidObject* m_pyramidObject[45];
+
+	GoalObject* m_goalObject;
 
 	//Window to which the game draws to
 	RenderWindow m_window;

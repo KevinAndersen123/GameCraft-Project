@@ -150,6 +150,10 @@ Game::Game(sf::ContextSettings settings) :
 	m_playerObject = new PlayerObject();
 	m_playerObject->setPosition(vec3(0.0f, 2.0f, 0.0f));
 
+	// setup goal
+	m_goalObject = new GoalObject();
+	m_goalObject->setPosition(vec3(0.0f,3.0f, -310.0f));
+
 	//Set The position of pyramids.
 
 	int offSet = 0;
@@ -378,6 +382,7 @@ void Game::update(sf::Time t_deltaTime)
 {
 	m_playerObject->update(t_deltaTime);
 	m_camera.update(m_playerObject->getPosition());
+	m_goalObject->update(t_deltaTime);
 
 	bool onGround = false;
 
@@ -414,6 +419,10 @@ void Game::update(sf::Time t_deltaTime)
 			resetGameLose();
 			break;
 		}
+	}
+	if (m_goalObject->m_collisionBox.getGlobalBounds().intersects(m_playerObject->m_collisionBox.getGlobalBounds()))
+	{
+		resetGameWin();
 	}
 }
 
@@ -502,12 +511,17 @@ void Game::render()
 		glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
 	}
 
-	bindGoalTexture();
-
 	bindPlayerTexture();
 
 	//Draw playerObject cubes.
 	mvp = projection * m_camera.getWorldToViewMatrix() * m_playerObject->getModelToWorldMatrix();
+	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
+	glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
+
+	bindGoalTexture();
+
+	//draw goal cube
+	mvp = projection * m_camera.getWorldToViewMatrix() * m_goalObject->getModelToWorldMatrix();
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 	glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
 
