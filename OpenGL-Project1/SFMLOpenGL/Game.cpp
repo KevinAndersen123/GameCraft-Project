@@ -152,7 +152,7 @@ Game::Game(sf::ContextSettings settings) :
 
 	// setup goal
 	m_goalObject = new GoalObject();
-	m_goalObject->setPosition(vec3(0.0f,3.0f, -310.0f));
+	m_goalObject->setPosition(vec3(0.0f,3.5f, -355.0f));
 
 	//Set The position of pyramids.
 
