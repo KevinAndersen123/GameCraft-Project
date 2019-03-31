@@ -16,6 +16,8 @@
 #include <SFML/Audio.hpp>
 #include <Debug.h>
 
+#include<Particle.h>
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
@@ -37,10 +39,14 @@ public:
 	~Game();
 	void run();
 private:
+	vec3 offset;
+
+	int m_timer; 
 
 	const int SCORE_GAIN{ 100 };
 	const int NUM_OF_GAME_OBJECTS{ 200 };
 	const int NUM_OF_PYRAMID_OBJECTS{ 45 };
+	const int NUM_OF_PARTICLES{ 30 };
 
 	//Array of gameObject cubes.
 	GameObject* m_gameObjects[200];
@@ -48,6 +54,8 @@ private:
 	//Array of playerObject cubes.
 	PlayerObject* m_playerObject;
 
+	//Array of particleObjects
+	Particle* m_particleObject[100];
 
 	//Array of pyramidObject pyramids.
 	PyramidObject* m_pyramidObject[45];
@@ -88,6 +96,7 @@ private:
 	void bindObjectTexture();
 	void bindPyramidTexture();
 	void bindGoalTexture();
+	void bindParticleTexture();
 };
 
 #endif  // ! GAME_H
