@@ -22,7 +22,7 @@
     <ProjectGuid>{DE25177D-AE73-4D01-B3CB-8BE7609D28B0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SFMLOpenGL</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -162,6 +162,7 @@ xcopy $(GLEW_SDK)\bin\Release\Win32 $(TargetDir) /C /Y</Command>
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="GoalObject.h" />
     <ClInclude Include="PlayerObject.h" />
     <ClInclude Include="Pyramid.h" />
@@ -174,6 +175,7 @@ xcopy $(GLEW_SDK)\bin\Release\Win32 $(TargetDir) /C /Y</Command>
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GoalObject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="PlayerObject.cpp" />
     <ClCompile Include="PyramidObject.cpp" />
     <ClCompile Include="stb_image.c" />
