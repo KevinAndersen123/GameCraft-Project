@@ -15,7 +15,7 @@ void Camera::update(glm::vec3 t_playerPosition)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F1))
 	{
-		m_offSet = glm::vec3(20,0,0);
+		m_offSet = glm::vec3(-20,0,0);
 	}
 	else
 		m_offSet = glm::vec3(12.0f, 8.0, 10.0f);
