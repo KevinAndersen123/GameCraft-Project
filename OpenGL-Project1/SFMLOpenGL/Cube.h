@@ -27,10 +27,10 @@
 	(-1.0f, -1.0f, 1.0f)         (1.0f, -1.0f, 1.0f)
 */
 
-const int CUBE_VERTICES	= 24;	// Total Number of Vertices
-const int CUBE_INDICES	= 12;	// Total Number of Indexes
+const int CUBE_VERTICES	= 44;	// Total Number of Vertices
+const int CUBE_INDICES	= 22;	// Total Number of Indexes
 const int CUBE_UVS		= 48;	// Total Number of UVs
-const int COLORS		= 24;	// Total Number of Colors
+const int COLORS	= 44;	// Total Number of Colors
 
 static const GLfloat vertices[] =
 {
@@ -69,6 +69,38 @@ static const GLfloat vertices[] =
 	 1.00f, -1.00f, -1.00f, // [5]	// (21)
 	 1.00f,  1.00f, -1.00f, // [6]	// (22)
 	 1.00f,  1.00f,  1.00f, // [2]	// (23)
+
+	 // Lego Notch front
+	 -0.5f, 1.0f, 0.5f, // [8] // (24)
+	 0.5f, 1.0f, 0.5f, // [9] // (25)
+	 0.5f ,1.2f , 0.5f, // [13] // (26)
+	 -0.5f , 1.2f , 0.5f, // [12] // (27)
+
+	 // Lego Notch right
+
+	 0.5f ,1.0f, 0.5f, // [9] // (28)
+	 0.5f ,1.0f, -0.5f, // [10] // (29)
+	 0.5f ,1.2f, -0.5f, // [14] // (30)
+	 0.5f ,1.2f, 0.5f, // [13] // (31)
+
+	 // Lego Notch back
+
+	 0.5f , 1.0f, -0.5f, // [10] // (32)
+	 -0.5f , 1.0f, -0.5f, // [11] // (33)
+	 -0.5f , 1.2f, -0.5f, // [15] // (34)
+	 0.5f , 1.2f, -0.5f, // [14] // (35)
+
+	 // Lego Notch Left
+	-0.5f , 1.0f, -0.5f, // [11] // (36)
+	-0.5f, 1.0f, 0.5f, // [8] // (37)
+	-0.5f , 1.2f , 0.5f, // [12] // (38)
+	-0.5f , 1.2f, -0.5f, // [15] // (39)
+	 
+	// Lego Notch Top
+	-0.5f , 1.2f , 0.5f, // [12] // (40)
+	0.5f ,1.2f , 0.5f, // [13] // (41)
+	0.5f , 1.2f, -0.5f, // [14] // (42)
+	-0.5f , 1.2f, -0.5f, // [15] // (43)
 };
 
 static const GLfloat colors[] = {
@@ -108,6 +140,39 @@ static const GLfloat colors[] = {
 	1.0f, 0.0f, 1.0f, 1.0f, // [5]	// (21)
 	1.0f, 0.0f, 1.0f, 1.0f, // [6]	// (22)
 	1.0f, 0.0f, 1.0f, 1.0f, // [2]	// (23)
+
+	// Lego Front Face
+	1.0f, 0.0f, 0.0f, 1.0f, // [8]	// (24)
+	1.0f, 0.0f, 0.0f, 1.0f, // [9]	// (25)
+	1.0f, 0.0f, 0.0f, 1.0f, // [13]	// (26)
+	1.0f, 0.0f, 0.0f, 1.0f, // [12]	// (27)
+
+	// Lego Top Face
+	1.0f, 0.0f, 1.0f, 1.0f, // [12]	// (40)
+	1.0f, 0.0f, 1.0f, 1.0f, // [13]	// (41)
+	1.0f, 0.0f, 1.0f, 1.0f, // [14]	// (42)
+	1.0f, 0.0f, 1.0f, 1.0f, // [15]	// (43)
+
+	// Lego Back Face
+	0.0f, 0.0f, 1.0f, 1.0f, // [10]	// (32)
+	0.0f, 0.0f, 1.0f, 1.0f, // [14]	// (33)
+	0.0f, 0.0f, 1.0f, 1.0f, // [15]	// (34)
+	0.0f, 0.0f, 1.0f, 1.0f, // [11]	// (35)
+
+	// Lego Left Face
+	1.0f, 1.0f, 0.0f, 1.0f, // [15]	// (36)
+	1.0f, 1.0f, 0.0f, 1.0f, // [11]	// (37)
+	1.0f, 1.0f, 0.0f, 1.0f, // [8]	// (38)
+	1.0f, 1.0f, 0.0f, 1.0f, // [12]	// (39)
+
+
+	// Lego Right Face
+	0.0f, 1.0f, 0.0f, 1.0f, // [9]	// (28)
+	0.0f, 1.0f, 0.0f, 1.0f, // [13]	// (29)
+	0.0f, 1.0f, 0.0f, 1.0f, // [14]	// (30)
+	0.0f, 1.0f, 0.0f, 1.0f, // [10]	// (31)
+
+
 };
 
 static GLfloat uvs[2 * 4 * 6] = {
@@ -168,7 +233,27 @@ static const GLuint indices[] =
 
 	// Right Face
 	20, 21, 22,
-	22, 23, 20
+	22, 23, 20,
+
+	// Lego Notch front
+	24, 25, 26,
+	26, 27, 24,
+
+	// Lego notch right
+	28, 29, 30,
+	30, 31, 28,
+
+	// lego notch back
+	32, 33, 34,
+	34, 35, 32,
+
+	// lego notch left
+	36, 37, 38,
+	38, 39, 36,
+
+	// lego notch top
+	40, 41, 42,
+	42, 43, 40
 };
 
 static const GLfloat particleVertices[] =
