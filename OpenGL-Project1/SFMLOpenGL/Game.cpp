@@ -389,15 +389,14 @@ void Game::update(sf::Time t_deltaTime)
 	m_timer++;
 	for (int i = 0; i < NUM_OF_PARTICLES; i++)
 	{
-		if (m_timer <= 5)
+
+		if (m_timer >= 10)
 		{
-			m_particleObject[i]->setPosition(m_particleObject[i]->getPosition() + offset);
+			m_particleObject[i]->setPosition(m_playerObject->getPosition());
+			m_timer = 0;
 		}
 		m_particleObject[i]->update(t_deltaTime);
-		if (m_timer >= 5)
-		{
-			m_particleObject[i]->setPosition(m_playerObject->getPosition() + offset);
-		}
+
 	}
 	m_playerObject->update(t_deltaTime);
 	m_camera.update(m_playerObject->getPosition());
@@ -524,6 +523,19 @@ void Game::render()
 		glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
 		glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
 	}
+	bindGoalTexture();
+	bindParticleTexture();
+	bindPlayerTexture();
+
+	//Draw playerObject cubes.
+	mvp = projection * m_camera.getWorldToViewMatrix() * m_playerObject->getModelToWorldMatrix();
+
+	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
+	glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
+
+	glBufferSubData(GL_ARRAY_BUFFER, 0 * CUBE_VERTICES * sizeof(GLfloat), 3 * CUBE_VERTICES * sizeof(GLfloat), particleVertices);
+	glBufferSubData(GL_ARRAY_BUFFER, (3 * CUBE_VERTICES) * sizeof(GLfloat), 2 * CUBE_UVS * sizeof(GLfloat), uvs);
+
 	for (int i = 0; i < NUM_OF_PARTICLES; i++)
 	{
 		mvp = projection * m_camera.getWorldToViewMatrix() * m_particleObject[i]->getModelToWorldMatrix();
@@ -531,14 +543,7 @@ void Game::render()
 		glDrawElements(GL_TRIANGLES, 3 * CUBE_VERTICES, GL_UNSIGNED_INT, NULL);
 	}
 
-	bindGoalTexture();
-	bindParticleTexture();
-	bindPlayerTexture();
 
-	//Draw playerObject cubes.
-	mvp = projection * m_camera.getWorldToViewMatrix() * m_playerObject->getModelToWorldMatrix();
-	glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
-	glDrawElements(GL_TRIANGLES, 3 * CUBE_INDICES, GL_UNSIGNED_INT, NULL);
 
 	m_window.display();
 }

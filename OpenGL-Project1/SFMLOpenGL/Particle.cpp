@@ -2,9 +2,9 @@
 
 Particle::Particle(vec3 t_pos)
 	: m_rotation(1.0f, 0.0f, 0.0f)
-	, m_velocity(rand() % 1 / 5.0, rand() % 1 / 5.0, rand() % 1 / 5.0)
+	, m_velocity(0.3, 0.2, 1.25)
 	, m_position(t_pos)
-	, m_acceleration(0.5f, 0.5f, 0.5f)
+	, m_acceleration(0.0f, 0.0f, 0.0f)
 {
 }
 
@@ -14,8 +14,10 @@ Particle::~Particle()
 
 void Particle::update(sf::Time t_dt)
 {
-	m_position -= m_velocity;
-	m_velocity *= m_acceleration;
+	m_position = m_position + m_velocity;
+	m_velocity = m_velocity + m_acceleration;
+	/*m_position -= m_velocity;
+	m_velocity *= m_acceleration;*/
 	setPosition(m_position);
 }
 
